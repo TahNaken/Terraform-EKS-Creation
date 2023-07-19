@@ -1,0 +1,41 @@
+# Learn Terraform - Provision an EKS Cluster
+
+This repo is a companion repo to the [Provision an EKS Cluster tutorial](https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks), containing
+Terraform configuration files to provision an EKS cluster on AWS.
+
+# Have an AWS account Ready
+
+#Install the below version terraform or latest && wget && unzip 
+
+sudo apt install wget unzip -y
+wget https://releases.hashicorp.com/terraform/1.5.3/terraform_1.5.3_linux_amd64.zip
+sudo unzip terraform_1.5.3_linux_amd64.zip -d /usr/local/bin/
+export terraform binary path temporally
+#Export terraform binary path temporally
+export PATH=$PATH:/usr/local/bin
+#Add path permanently for current user.By Exporting path in .bashrc file at end of file.
+ echo  "export PATH=$PATH:/usr/local/bin" >> ~/.bashrc
+
+
+#awscli installation
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+
+#AwsIAM Authenticator
+curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.5.9/aws-iam-authenticator_0.5.9_linux_amd64
+
+#modify the permissions of the IAM Authenticator
+chmod +x ./aws-iam-authenticator
+
+# Make the Home directory of AWS Iam Authenticator and Export the path
+mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$HOME/bin:$PATH
+
+sudo echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+
+#use this code to verify your cluster information
+aws eks --region $(terraform output -raw region) update-kubeconfig \
+    --name $(terraform output -raw cluster_name)
+
+#now you can query your cluster
+
+run "kubectl get nodes"
