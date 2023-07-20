@@ -19,7 +19,7 @@ export PATH=$PATH:/usr/local/bin
 
 #awscli installation
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
+Sudo ./aws/install
 
 #AwsIAM Authenticator
 curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.5.9/aws-iam-authenticator_0.5.9_linux_amd64
